@@ -1,0 +1,54 @@
+{
+    "name": "doctrine/doctrine-module",
+    "description": "Zend Framework 2 Module that provides Doctrine basic functionality required for ORM and ODM modules",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "doctrine",
+        "module",
+        "zf2"
+    ],
+    "homepage": "http://www.doctrine-project.org/",
+    "authors": [
+        {
+            "name": "Kyle Spraggs",
+            "email": "theman@spiffyjr.me",
+            "homepage": "http://www.spiffyjr.me/"
+        },
+        {
+            "name": "Marco Pivetta",
+            "email": "ocramius@gmail.com",
+            "homepage": "http://marco-pivetta.com/"
+        },
+        {
+            "name": "Evan Coury",
+            "email": "me@evancoury.com",
+            "homepage": "http://blog.evan.pro/"
+        },
+        {
+            "name": "Guilherme Blanco",
+            "email": "guilhermeblanco@hotmail.com"
+        },
+        {
+            "name": "Michaël Gallego",
+            "email": "mic.gallego@gmail.com",
+            "homepage": "http://www.michaelgallego.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/common": ">=2.3-dev,<2.5-dev",
+        "doctrine/data-fixtures": "1.*",
+        "symfony/console": ">=2.0.13",
+        "zendframework/zendframework": "2.*"
+    },
+    "minimum-stability": "alpha",
+    "autoload": {
+        "psr-0": {
+            "DoctrineModule\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/doctrine-module"
+    ]
+}
