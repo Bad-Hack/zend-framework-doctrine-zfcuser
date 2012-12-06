@@ -2,27 +2,12 @@
 
 namespace Album\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController, Zend\View\Model\ViewModel, Album\Form\AlbumForm, Doctrine\ORM\EntityManager, Album\Entity\Album;
 
-class AlbumController extends AbstractActionController {
-	/**
-	 *
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	protected $em;
-	public function setEntityManager(EntityManager $em) {
-		$this->em = $em;
-	}
-	public function getEntityManager() {
-		if (null === $this->em) {
-			$this->em = $this->getServiceLocator ()->get ( 'Doctrine\ORM\EntityManager' );
-		}
-		return $this->em;
-	}
+use AfcCommons\Controller\AbstractController,Zend\View\Model\ViewModel, Album\Form\AlbumForm,  Album\Entity\Album;
+
+class AlbumController extends AbstractController {
+	
 	public function indexAction() {
-		var_dump($this->zfcUserAuthentication()->hasIdentity());
-		var_dump($this->zfcUserAuthentication()->getIdentity());
-		die;
 		return new ViewModel ( array (
 				'albums' => $this->getEntityManager ()->getRepository ( 'Album\Entity\Album' )->findAll () 
 		) );
@@ -38,15 +23,12 @@ class AlbumController extends AbstractActionController {
 			$form->setInputFilter ( $album->getInputFilter () );
 			$form->setData ( $request->getPost () );
 			if ($form->isValid ()) {
-				$fileBank = $this->getServiceLocator()->get('FileBank');
-				$file = $this->params ()->fromFiles ( 'image' );
-				$fileBank->save($file,array("tirth"));
 				$album->populate ( $form->getData () );
 				$this->getEntityManager ()->persist ( $album );
 				$this->getEntityManager ()->flush ();
 				
 				// Redirect to list of albums
-				return $this->redirect ()->toRoute ( 'album' );
+				return $this->redirect ()->toRoute ( 'album' , array('controller'=>'album') );
 			}
 		}
 		
@@ -76,7 +58,7 @@ class AlbumController extends AbstractActionController {
 				$this->getEntityManager ()->flush ();
 				
 				// Redirect to list of albums
-				return $this->redirect ()->toRoute ( 'album' );
+				return $this->redirect ()->toRoute ( 'album',array('controller'=>'album') );
 			}
 		}
 		
@@ -88,7 +70,7 @@ class AlbumController extends AbstractActionController {
 	public function deleteAction() {
 		$id = ( int ) $this->getEvent ()->getRouteMatch ()->getParam ( 'id' );
 		if (! $id) {
-			return $this->redirect ()->toRoute ( 'album' );
+			return $this->redirect ()->toRoute ( 'album',array('controller'=>'album') );
 		}
 		$request = $this->getRequest ();
 		if ($request->isPost ()) {
@@ -103,10 +85,7 @@ class AlbumController extends AbstractActionController {
 			}
 			
 			// Redirect to list of albums
-			return $this->redirect ()->toRoute ( 'album', array (
-					'controller' => 'album',
-					'action' => 'index' 
-			) );
+			return $this->redirect ()->toRoute ( 'album',array('controller'=>'album') );
 		}
 		return array (
 				'id' => $id,

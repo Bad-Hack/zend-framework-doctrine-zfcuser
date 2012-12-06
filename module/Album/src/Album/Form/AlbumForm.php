@@ -33,10 +33,6 @@ class AlbumForm extends Form {
 						'label' => 'Title' 
 				) 
 		) );
-		$this->add ( new \Zend\Form\Element\File( 'image', array (
-								'label' => 'Album Image'
-						)
-		) );
 		$this->add ( array (
 				'name' => 'submit',
 				'attributes' => array (
